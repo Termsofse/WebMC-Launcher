@@ -1,0 +1,126 @@
+	<!DOCTYPE html>
+<html>
+<head>
+<title>WebMC Launcher</title>
+<link rel="icon" href="/favicon.webp">
+<link rel="stylesheet" href="/style.css">
+<script defer src="/master.js"></script>
+<!--<script src="/siteAPI.js"></script>-->
+<script src="/fontawesome.js" crossorigin="anonymous"></script>
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#009933">
+<meta property="og:title" content="WebMC Launcher" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="/" />
+<meta property="og:image" content="/shader-screenshots/0.jpeg" />
+<meta property="og:description" content="Minecraft launcher for the web." />
+<meta property="og:site_name" content="WebMC Launcher" />
+<meta property="og:locale" content="en_US" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+<script src="/cloak.js"></script>
+</head>
+<body>
+<noscript>You need to enable javascript to run this app</noscript>
+<div class="loader"></div>
+<div class="main-content">
+<div class="sidebar" onclick="window.gameFrame.contentWindow.focus();">
+<div class="sidebar_profile">
+<img src="/logo-full.png" class="sidebar_profile_icon">
+<a>${usrName}</a>
+</div>
+<li id="sidebar-launcher" class="sidebar-content sidebar-content-selected" onclick="sidebarChangePage('launcher')">
+<img src="/icons/mc-logo.png" class="sidebar-content-icon" style="transform: translateX(-5px);">
+<a style="position: absolute; transform: translateX(12%);">Launcher</a>
+</li>
+<li id="sidebar-custom-/servers" class="sidebar-content" onclick="sidebarChangePage('custom-/servers')">
+<!--<img src="/icons/server.png" class="sidebar-content-icon">-->
+<i class="fa-solid fa-server" class="sidebar-content-icon" style="margin-right: 15px; color: #009900"></i>
+<a style="position: absolute; transform: translateX(12%);">Server List</a>
+</li>
+<li id="sidebar-data" class="sidebar-content" onclick="sidebarChangePage('data')">
+<!--<img src="/icons/folder.png" class="sidebar-content-icon">-->
+<i class="fa-solid fa-file" class="sidebar-content-icon" style="margin-right: 15px; color: #ffcc00"></i>
+<a style="position: absolute; transform: translateX(12%);">Site Data</a>
+</li>
+<li id="sidebar-toolbox" class="sidebar-content" onclick="sidebarChangePage('toolbox')">
+<!--<img src="/icons/toolbox.png" class="sidebar-content-icon">-->
+<i class="fa-solid fa-toolbox" class="sidebar-content-icon" style="margin-right: 15px; color: #ff6600"></i>
+<a style="position: absolute; transform: translateX(12%);">Toolbox</a>
+</li>
+<li class="sidebar-content" onclick="window.open('/offline-download', '_blank')">
+<!--<img src="/icons/download.png" class="sidebar-content-icon">-->
+<i class="fa-solid fa-download" class="sidebar-content-icon" style="margin-right: 15px; color: #cc0000"></i>
+<a style="position: absolute; transform: translateX(12%);">Download</a>
+</li>
+<li class="sidebar-content" onclick="window.open('/go/discord', '_blank')">
+<i class="fa-brands fa-discord" class="sidebar-content-icon" style="margin-right: 15px; color: #3366ff; transform: translateX(-10%);"></i>
+<a style="position: absolute; transform: translateX(12%);">Discord</a>
+</li>
+<!--<li id="sidebar-changelog" class="sidebar-content" onclick="sidebarChangePage('changelog')">
+<img src="/icons/changelog.png" class="sidebar-content-icon">
+<a style="position: absolute; transform: translateX(12%);">Changelog</a>
+</li>-->
+<li id="sidebar-settings" class="sidebar-content" style="position:absolute;bottom:2%" onclick="sidebarChangePage('settings')">
+<img src="/icons/settings.png" class="sidebar-content-icon">
+<a>Settings</a>
+</li>
+<div class="dev-info" style="position:absolute;bottom:0;left:5%;">
+<span style="cursor:default;color:#969696">v${appVersion}</span>
+</div>
+</div>
+<iframe src="about:blank" class="sidebar_frame"></iframe>
+<main>
+<!--<button class="mc-btn" id="download-btn" style="right:7px;top:7px;" onclick="window.open('/offline-download','_blank')"><i class="fa-solid fa-download"></i></button>-->
+<button class="mc-btn" id="fullscreen-btn" style="right:7px;bottom:calc(7.5% + 7px);visibility:hidden;opacity:0;z-index:175;" onclick="toggleFullscreen()"><i class="fa-solid fa-expand"></i></button>
+<button class="mc-btn" id="aboutBlank-btn" style="right:54px;bottom:calc(7.5% + 7px);visibility:hidden;opacity:0;" onclick="openAboutBlankWindow(window.currentVersion, false)"><i class="fa-solid fa-arrow-up-right-from-square"></i></button>
+<button class="mc-btn" id="reload-btn" style="right:101px;bottom:calc(7.5% + 7px);visibility:hidden;opacity:0;" onclick="window.gameFrame.contentWindow.location.reload()"><i class="fa-solid fa-rotate"></i></button>
+<button class="mc-btn" id="window-btn" style="right:148px;bottom:calc(7.5% + 7px);visibility:hidden;opacity:0;" onclick="openAboutBlankWindow(window.currentVersion, true)"><i class="fa-solid fa-window-maximize"></i></button>
+<button class="mc-btn esl-btn" id="esl-btn" style="right:195px;bottom:calc(7.5% + 7px);visibility:hidden;opacity:0;" onclick="ESLExperiment()"></button>
+<iframe src="about:blank" class="game-frame-load"></iframe>
+<iframe class="game-frame" onload="this.contentWindow.focus();" src="/blank.html" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-orientation-lock allow-pointer-lock allow-popups-to-escape-sandbox allow-presentation allow-top-navigation allow-top-navigation-by-user-activation" scrolling="no" allow="clipboard-read; clipboard-write"></iframe>
+</main>
+<div onclick="window.gameFrame.contentWindow.focus()" class="horizontal-bar topbar" style="top:0;height:6%;">
+<a id="topbar-play" onclick="topbarChangePage('play')" class="active">Play</a>
+<a id="topbar-installations" onclick="topbarChangePage('installations')" class="inactive">Installations</a>
+<!--<a id="topbar-skins" onclick="topbarChangePage('skins')" class="inactive">Skins</a>
+<a id="topbar-patchnotes" onclick="topbarChangePage('patchnotes')" class="inactive">Patch Notes</a>-->
+</div>
+<iframe src="about:blank" class="topbar_frame"></iframe>
+<div onclick="window.gameFrame.contentWindow.focus()" class="horizontal-bar" style="bottom:0;height:7.5%;">
+<div class="version-dropdown">
+<button style="float:left;" onclick="versionDropdown()" class="version-btn">Select Version <i id="version-btn-arrow" class="fa-solid fa-caret-down"></i></button>
+<div class="version-content" id="versionContent">
+<a class="vanilla" onclick="changeVersion('1.8.8')">1.8.8</a>
+<a class="modded" onclick="changeVersion('1.8.8-forge')">1.8.8-forge</a>
+<a class="modded" onclick="changeVersion('reborn')">EaglerReborn</a>
+<a class="modded" onclick="changeVersion('optifine')">Shadow Client</a>
+<a class="modded" onclick="changeVersion('resent')">Resent Client</a>
+<a class="modded" onclick="changeVersion('astra')">Astra Client</a>
+<a class="modded" onclick="changeVersion('1.11')">1.11.2</a>
+<a class="modded" onclick="changeVersion('1.9')">1.9.4</a>
+<!--<a class="hacked" onclick="changeVersion('dragonx-client')">DragonX Client</a>
+<a class="hacked" onclick="changeVersion('uwu')">UwU Client</a>-->
+<a class="vanilla" onclick="changeVersion('1.5.2')">1.5.2</a>
+<!--<a class="hacked" onclick="changeVersion('fuchsiax')">FuchsiaX</a>
+<a class="hacked" onclick="changeVersion('ayuncraft')">Ayuncraft</a>-->
+<a class="vanilla" onclick="changeVersion('1.2.5')">1.2.5</a>
+<a class="vanilla" onclick="changeVersion('beta-1.7.3')">Beta 1.7.3</a>
+<a class="vanilla" onclick="changeVersion('beta-1.3')">Beta 1.3</a>
+<a class="vanilla" onclick="changeVersion('alpha-1.2.6')">Alpha 1.2.6</a>
+<a class="vanilla" onclick="changeVersion('infdev')">Infdev</a>
+<a class="vanilla" onclick="changeVersion('indev')">Indev</a>
+<a class="vanilla" onclick="changeVersion('classic')">Classic</a>
+<a class="vanilla" onclick="changeVersion('ms-classic')">Classic (Recreation)</a>
+<a class="vanilla" onclick="changeVersion('paper')">Paper</a>
+<a class="vanilla" onclick="changeVersion('scratch')">Scratch Edition 3D</a>
+</div>
+</div>
+<a class="play-btn" onclick="playGame()">PLAY</a>
+<span>Made with <i style="color:#ea3737;text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;" class="fa-solid fa-heart"></i> by Colbster937</span>
+</div>
+</div>
+<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "a0fadd2f419e4b70ba785adafec599a2"}'></script><!-- End Cloudflare Web Analytics -->
+<script src="script.js"></script>
+</body>
+</html>
