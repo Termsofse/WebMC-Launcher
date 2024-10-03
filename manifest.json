@@ -1,0 +1,14 @@
+{
+    "name": "WebMC Launcher",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#009933",
+    "theme_color": "#009933",
+    "icons": [
+      {
+        "src": "favicon.webp",
+        "type": "image/webp",
+        "sizes": "300x300"
+      }
+    ]
+  }
